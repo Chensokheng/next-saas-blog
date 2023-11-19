@@ -23,30 +23,37 @@ export default function Dashboard() {
 					<DashboardIcon />
 					/Dashboard
 				</h1>
-				<Button className="flex items-center gap-2 " variant="outline">
-					Create <PlusIcon />{" "}
-				</Button>
+				<Link href="/dashboard/blog/create">
+					<Button
+						className="flex items-center gap-2 "
+						variant="outline"
+					>
+						Create <PlusIcon />
+					</Button>
+				</Link>
 			</div>
-			<div className="rounded-md bg-graident-dark border-[0.5px] ">
-				<div className="grid grid-cols-4 border-b p-5 dark:text-gray-500">
-					<h1 className=" col-span-2">Title</h1>
-					<h1>Premium</h1>
-				</div>
-				<div className="space-y-10 p-5">
-					{blogs.map((blog, index) => {
-						return (
-							<div className="grid grid-cols-4" key={index}>
-								<h1 className="dark:text-gray-200 col-span-2 font-lg font-medium">
-									{blog.title}
-								</h1>
-								<Switch
-									className="bg-green-500"
-									checked={blog.is_premium}
-								/>
-								<Actions />
-							</div>
-						);
-					})}
+			<div className="rounded-md bg-graident-dark border-[0.5px] overflow-y-scroll ">
+				<div className="w-[800px] md:w-full">
+					<div className="grid grid-cols-4 border-b p-5 dark:text-gray-500">
+						<h1 className=" col-span-2">Title</h1>
+						<h1>Premium</h1>
+					</div>
+					<div className="space-y-10 p-5">
+						{blogs.map((blog, index) => {
+							return (
+								<div className="grid grid-cols-4" key={index}>
+									<h1 className="dark:text-gray-200 col-span-2 font-lg font-medium">
+										{blog.title}
+									</h1>
+									<Switch
+										className="bg-green-500"
+										checked={blog.is_premium}
+									/>
+									<Actions />
+								</div>
+							);
+						})}
+					</div>
 				</div>
 			</div>
 			{/* end of blog table */}
@@ -57,43 +64,45 @@ export default function Dashboard() {
 					/User
 				</h1>
 			</div>
-			<div className="rounded-md bg-graident-dark border-[0.5px] ">
-				<div className="grid grid-cols-4 border-b p-5 dark:text-gray-500">
-					<h1>Name</h1>
-					<h1>Subscription</h1>
-					<h1>email</h1>
-					<h1>{"customer's id"}</h1>
-				</div>
-				<div className="space-y-10 p-5">
-					{users.map((user, index) => {
-						return (
-							<div
-								className="grid grid-cols-4 grid-flow-dense"
-								key={index}
-							>
-								<div className="flex items-center gap-2 font-medium">
-									<Image
-										src={user.image_url}
-										className="rounded-full ring-green-500 ring-1"
-										width={50}
-										height={50}
-										alt={user.display_name}
-									/>
-									<h1>{user.display_name}</h1>
-								</div>
+			<div className="rounded-md bg-graident-dark border-[0.5px] overflow-y-scroll ">
+				<div className="w-[900px] md:w-full">
+					<div className="grid grid-cols-4 border-b p-5 dark:text-gray-500">
+						<h1>Name</h1>
+						<h1>Subscription</h1>
+						<h1>email</h1>
+						<h1>{"customer's id"}</h1>
+					</div>
+					<div className="space-y-10 p-5">
+						{users.map((user, index) => {
+							return (
+								<div
+									className="grid grid-cols-4 grid-flow-dense"
+									key={index}
+								>
+									<div className="flex items-center gap-2 font-medium">
+										<Image
+											src={user.image_url}
+											className="rounded-full ring-green-500 ring-1"
+											width={50}
+											height={50}
+											alt={user.display_name}
+										/>
+										<h1>{user.display_name}</h1>
+									</div>
 
-								<SubscriptionStatus
-									status={user.subscription_status}
-								/>
-								<div className="flex items-center">
-									<h1>{user.email}</h1>
+									<SubscriptionStatus
+										status={user.subscription_status}
+									/>
+									<div className="flex items-center">
+										<h1>{user.email}</h1>
+									</div>
+									<div className="flex items-center">
+										<h1>{user.customer_id}</h1>
+									</div>
 								</div>
-								<div className="flex items-center">
-									<h1>{user.customer_id}</h1>
-								</div>
-							</div>
-						);
-					})}
+							);
+						})}
+					</div>
 				</div>
 			</div>
 			{/* end user */}

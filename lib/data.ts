@@ -25,13 +25,14 @@ export const blogs = [
 	{
 		title: "Unleashing Creativity: The Surprising Benefits of Doodling",
 		image_url:
-			"https://images.unsplash.com/photo-1700223172746-ff5615d70345?q=80&w=3675&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"https://images.unsplash.com/photo-1699100329878-7f28bb780787?q=80&w=3732&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 		date: "2023-10-05",
 		is_premium: true,
 	},
 	{
 		title: "Unleashing Creativity: The Surprising Benefits of Doodling",
-		image_url: "https://source.unsplash.com/random/800x600",
+		image_url:
+			"https://images.unsplash.com/photo-1700316740839-f5afe22536e4?q=80&w=3732&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 		date: "2023-10-05",
 		is_premium: false,
 	},
@@ -67,3 +68,21 @@ export const users = [
 		email: "eva.brown@example.com",
 	},
 ];
+
+export const blogDeafultValue = `
+## Serendipity Chronicles: Tales from a Random Blog
+
+As we wrap up our adventures, let's reflect on the serendipitous moments that defined this journey. The JavaScript snippet below captures a moment of serendipity in code:
+
+\`\`\`js @app/lib/serendipityMoments.js
+const serendipityMoments = [
+  "Unexpectedly meeting a fellow adventurer",
+  "Discovering a hidden gem in a random location",
+  "Finding the perfect solution when least expected"
+];
+
+const randomSerendipity = serendipityMoments[Math.floor(Math.random() * serendipityMoments.length)];
+console.log(\`Serendipity at its finest: \${randomSerendipity}\`);
+\`\`\`
+
+`;

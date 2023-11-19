@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import MarkdownPreview from "./components/MarkdownPreview";
+import { blogMarkdown } from "./data";
 
 export default function page() {
 	const blog = {
@@ -27,7 +28,7 @@ export default function page() {
 					className=" object-cover object-center rounded-md border-[0.5px] border-zinc-600"
 				/>
 			</div>
-			<MarkdownPreview />
+			<MarkdownPreview content={blogMarkdown} />
 		</div>
 	);
 }

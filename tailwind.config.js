@@ -20,6 +20,9 @@ module.exports = {
 				"graident-dark":
 					"radial-gradient(76.33% 76.59% at 50.15% 6.06%, #1A1A1A 0%, rgba(26, 26, 26, 0.38) 100%)",
 			},
+			height: {
+				"70vh": "70vh",
+			},
 			colors: {
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",

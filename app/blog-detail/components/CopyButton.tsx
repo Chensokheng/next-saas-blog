@@ -4,12 +4,12 @@ import { useState } from "react";
 import { BsCopy } from "react-icons/bs";
 import { IoCheckmarkOutline } from "react-icons/io5";
 
-export default function CopyButton() {
+export default function CopyButton({ id }: { id: string }) {
 	const [onCopy, setOnCopy] = useState(false);
 	const [onSuccess, setSuccess] = useState(false);
 
 	const handleCopy = async () => {
-		let text = document.getElementById("hello")!.textContent;
+		let text = document.getElementById(id)!.textContent;
 		try {
 			await navigator.clipboard.writeText(text!);
 			setOnCopy(true);
