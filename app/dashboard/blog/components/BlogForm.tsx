@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { blogDeafultValue } from "@/lib/data";
-import MarkdownPreview from "@/app/blog-detail/components/MarkdownPreview";
+import MarkdownPreview from "@/app/(home)/blog-detail/components/MarkdownPreview";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import {
