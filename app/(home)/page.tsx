@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import HoverUnderLine from "../components/HoverUnderLine";
+import HoverUnderLine from "./components/HoverUnderLine";
 import Image from "next/image";
 import { blogs } from "@/lib/data";
 

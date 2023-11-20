@@ -1,8 +1,7 @@
 import React from "react";
 import HoverUnderLine from "./HoverUnderLine";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import LoginForm from "./LoginForm";
 
 export default function Navbar() {
 	return (
@@ -12,9 +11,7 @@ export default function Navbar() {
 					DailyMedia
 				</Link>
 			</HoverUnderLine>
-			<Button className="flex items-center gap-2" variant="outline">
-				<GitHubLogoIcon /> Login
-			</Button>
+			<LoginForm />
 		</nav>
 	);
 }

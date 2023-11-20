@@ -4,7 +4,7 @@ import React from "react";
 import EditForm from "./components/EditForm";
 import { DashboardIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import HoverUnderLine from "@/app/components/HoverUnderLine";
+import HoverUnderLine from "@/app/(home)/components/HoverUnderLine";
 import BlogNav from "../../components/BlogNav";
 
 export default function Page({ params }: { params: { id: string } }) {

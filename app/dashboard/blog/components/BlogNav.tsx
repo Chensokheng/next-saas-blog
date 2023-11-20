@@ -1,4 +1,4 @@
-import HoverUnderLine from "@/app/components/HoverUnderLine";
+import HoverUnderLine from "@/app/(home)/components/HoverUnderLine";
 import Link from "next/link";
 import React from "react";
 
