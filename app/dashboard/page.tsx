@@ -19,9 +19,10 @@ export default function Dashboard() {
 			{/* blog table */}
 
 			<div className="flex items-center justify-between">
-				<h1 className="text-xl text-gray-400 flex  items-center gap-2">
+				<h1 className="text-sm text-gray-400 flex  items-center gap-1">
+					/
 					<DashboardIcon />
-					/Dashboard
+					dashboard
 				</h1>
 				<Link href="/dashboard/blog/create">
 					<Button
@@ -49,7 +50,7 @@ export default function Dashboard() {
 										className="bg-green-500"
 										checked={blog.is_premium}
 									/>
-									<Actions />
+									<Actions id={blog.id} />
 								</div>
 							);
 						})}
@@ -59,9 +60,10 @@ export default function Dashboard() {
 			{/* end of blog table */}
 			{/* user */}
 			<div>
-				<h1 className="text-xl text-gray-400 flex  items-center gap-2">
+				<h1 className="text-sm text-gray-400 flex  items-center gap-1">
+					/
 					<PersonIcon />
-					/User
+					user
 				</h1>
 			</div>
 			<div className="rounded-md bg-graident-dark border-[0.5px] overflow-y-scroll ">
@@ -130,9 +132,10 @@ const SubscriptionStatus = ({ status }: { status: string }) => {
 	);
 };
 
-const Actions = () => {
+const Actions = ({ id }: { id: string }) => {
 	return (
 		<div className="flex items-center gap-2">
+			{/* TODO: change to id */}
 			<Link href="/blog-detail">
 				<Button className="flex gap-2 items-center" variant="outline">
 					<EyeOpenIcon />
@@ -144,10 +147,13 @@ const Actions = () => {
 				<TrashIcon />
 				Delete
 			</Button>
-			<Button className="flex gap-2 items-center" variant="outline">
-				<Pencil1Icon />
-				Edit
-			</Button>
+
+			<Link href={`/dashboard/blog/edit/${id}`}>
+				<Button className="flex gap-2 items-center" variant="outline">
+					<Pencil1Icon />
+					Edit
+				</Button>
+			</Link>
 		</div>
 	);
 };
