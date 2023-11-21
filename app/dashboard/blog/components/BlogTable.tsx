@@ -1,9 +1,11 @@
-import { Switch } from "@/components/ui/switch";
 import React from "react";
 import { EyeOpenIcon, Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import readBlog, { updateBlogById } from "../actions";
+import { updateBlogById, readBlog, deleteBlogById } from "../actions";
+import { IBlog } from "@/lib/types";
+import SwitchForm from "./SwitchForm";
+import DeleteAlert from "./DeleteAlert";
 
 export default async function BlogTable() {
 	const { data: blogs } = await readBlog();
@@ -19,21 +21,37 @@ export default async function BlogTable() {
 					</div>
 					<div className="space-y-10 p-5">
 						{blogs?.map((blog, index) => {
+							const updatePremium = updateBlogById.bind(
+								null,
+								blog.id,
+								{
+									is_premium: !blog.is_premium,
+								} as IBlog
+							);
+
+							const updatePulished = updateBlogById.bind(
+								null,
+								blog.id,
+								{
+									is_published: !blog.is_published,
+								} as IBlog
+							);
+
 							return (
 								<div className="grid grid-cols-5" key={index}>
 									<h1 className="dark:text-gray-200 col-span-2 font-lg font-medium">
 										{blog.title}
 									</h1>
-									<Switch
-										type="submit"
+									<SwitchForm
 										checked={blog.is_premium}
-										className="bg-green-500"
+										onSubmit={updatePremium}
+										name="premium"
 									/>
 
-									<Switch
-										type="submit"
+									<SwitchForm
 										checked={blog.is_published}
-										className="bg-green-500"
+										onSubmit={updatePulished}
+										name="publish"
 									/>
 
 									<Actions id={blog.id} />
@@ -57,11 +75,7 @@ const Actions = ({ id }: { id: string }) => {
 					View
 				</Button>
 			</Link>
-
-			<Button className="flex gap-2 items-center" variant="outline">
-				<TrashIcon />
-				Delete
-			</Button>
+			<DeleteAlert id={id} />
 
 			<Link href={`/dashboard/blog/edit/${id}`}>
 				<Button className="flex gap-2 items-center" variant="outline">

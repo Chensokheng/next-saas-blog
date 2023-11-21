@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { blogDeafultValue } from "@/lib/data";
 import MarkdownPreview from "@/app/(home)/blog-detail/components/MarkdownPreview";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -24,54 +23,35 @@ import {
 	RocketIcon,
 	StarIcon,
 } from "@radix-ui/react-icons";
-import { useState, useTransition } from "react";
-import { IBlog } from "@/lib/types";
+import { ReactNode, useState, useTransition } from "react";
+import { IBlogDetial, IBlogForm } from "@/lib/types";
 import { Switch } from "@/components/ui/switch";
 import { BsSave } from "react-icons/bs";
-
-const FormSchema = z.object({
-	title: z.string().min(10, {
-		message: "title is too short",
-	}),
-	content: z.string().min(50, {
-		message: "Content is too short",
-	}),
-	image_url: z.string().url({
-		message: "Invalid url",
-	}),
-	is_premium: z.boolean(),
-	is_published: z.boolean(),
-});
+import { BlogFormSchema, BlogFormSchemaType } from "../schema";
 
 export default function BlogForm({
 	onHandleSubmit,
 	defaultBlog,
 }: {
-	defaultBlog: IBlog;
-	onHandleSubmit: (data: {
-		content: string;
-		title: string;
-		image_url: string;
-		is_premium: boolean;
-		is_published: boolean;
-	}) => void;
+	defaultBlog: IBlogDetial;
+	onHandleSubmit: (data: BlogFormSchemaType) => void;
 }) {
 	const [isPending, startTransition] = useTransition();
 	const [isPreview, setPreivew] = useState(false);
 
-	const form = useForm<z.infer<typeof FormSchema>>({
+	const form = useForm<z.infer<typeof BlogFormSchema>>({
 		mode: "all",
-		resolver: zodResolver(FormSchema),
+		resolver: zodResolver(BlogFormSchema),
 		defaultValues: {
-			title: defaultBlog.title,
-			content: defaultBlog.content,
-			image_url: defaultBlog.image_url,
-			is_premium: defaultBlog.is_premium,
-			is_published: defaultBlog.is_published,
+			title: defaultBlog?.title,
+			content: defaultBlog?.blog_content.content,
+			image_url: defaultBlog?.image_url,
+			is_premium: defaultBlog?.is_premium,
+			is_published: defaultBlog?.is_published,
 		},
 	});
 
-	const onSubmit = (data: z.infer<typeof FormSchema>) => {
+	const onSubmit = (data: z.infer<typeof BlogFormSchema>) => {
 		startTransition(() => {
 			onHandleSubmit(data);
 		});
@@ -155,7 +135,8 @@ export default function BlogForm({
 						type="submit"
 						role="button"
 						className={cn(
-							"flex gap-2 items-center border px-3 py-2 rounded-md border-green-500 disabled:border-gray-800  bg-zinc-800 transition-all group text-sm disabled:bg-gray-900"
+							"flex gap-2 items-center border px-3 py-2 rounded-md border-green-500 disabled:border-gray-800  bg-zinc-800 transition-all group text-sm disabled:bg-gray-900",
+							{ "animate-spin": isPending }
 						)}
 						disabled={!form.formState.isValid}
 					>

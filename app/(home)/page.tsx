@@ -4,7 +4,7 @@ import HoverUnderLine from "./components/HoverUnderLine";
 import Image from "next/image";
 import { blogs } from "@/lib/data";
 
-export default function Home() {
+export default async function Home() {
 	return (
 		<div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 p-5 xl:p-0">
 			{blogs.map((blog, index) => {

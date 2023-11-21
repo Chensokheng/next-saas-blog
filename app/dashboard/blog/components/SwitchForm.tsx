@@ -1,0 +1,27 @@
+"use client";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "@/components/ui/use-toast";
+
+export default function SwitchForm({
+	checked,
+	onSubmit,
+	name,
+}: {
+	checked: boolean;
+	onSubmit: () => Promise<string>;
+	name: string;
+}) {
+	const handleonSubmit = async () => {
+		const { error } = JSON.parse(await onSubmit());
+		if (!error) {
+			toast({
+				title: `Successfully update ${name} 🎉`,
+			});
+		}
+	};
+	return (
+		<form action={handleonSubmit}>
+			<Switch type="submit" checked={checked} className="bg-green-500" />
+		</form>
+	);
+}

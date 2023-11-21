@@ -6,15 +6,13 @@ import { defaultCreateBlog } from "@/lib/data";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import BlogForm from "../components/BlogForm";
 import { createBlog } from "../actions";
+import { BlogFormSchemaType } from "../schema";
+import { useRouter } from "next/navigation";
 
 export default function CreateForm() {
-	const onHandleSubmit = async (data: {
-		content: string;
-		title: string;
-		image_url: string;
-		is_premium: boolean;
-		is_published: boolean;
-	}) => {
+	const router = useRouter();
+
+	const onHandleSubmit = async (data: BlogFormSchemaType) => {
 		const result = JSON.parse(await createBlog(data));
 
 		const { error } = result as PostgrestSingleResponse<null>;
@@ -32,6 +30,7 @@ export default function CreateForm() {
 				title: "Successfully create a post 🎉",
 				description: data.title,
 			});
+			router.push("/dashboard/blog");
 		}
 	};
 

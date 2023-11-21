@@ -1,3 +1,5 @@
+import { IBlogDetial } from "./types";
+
 export const blogDeafultValue = `
 ## Serendipity Chronicles: Tales from a Random Blog
 
@@ -73,14 +75,18 @@ export const blogs = [
 	},
 ];
 
-export const defaultCreateBlog = {
+export const defaultCreateBlog: IBlogDetial = {
 	id: "",
 	title: "",
 	image_url: "",
-	date: "",
+	created_at: "",
 	is_premium: false,
 	is_published: false,
-	content: "",
+	blog_content: {
+		created_at: "",
+		content: "",
+		blog_id: "",
+	},
 };
 export const users = [
 	{

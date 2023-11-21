@@ -41,25 +41,22 @@ export interface Database {
           blog_id: string
           content: string
           created_at: string
-          id: string
         }
         Insert: {
           blog_id: string
           content: string
           created_at?: string
-          id?: string
         }
         Update: {
           blog_id?: string
           content?: string
           created_at?: string
-          id?: string
         }
         Relationships: [
           {
             foreignKeyName: "blog_content_blog_id_fkey"
             columns: ["blog_id"]
-            isOneToOne: false
+            isOneToOne: true
             referencedRelation: "blog"
             referencedColumns: ["id"]
           }
