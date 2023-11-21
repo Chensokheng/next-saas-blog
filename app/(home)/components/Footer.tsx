@@ -10,7 +10,7 @@ export default function Footer() {
 		<footer className=" border-t py-10">
 			<div className="max-w-7xl py-10 px-5 md:p-0 space-y-5  mx-auto flex justify-between md:items-end flex-col md:flex-row">
 				<div className="space-y-10">
-					<div className="space-y-2 w-96">
+					<div className="space-y-2 w-full sm:w-96">
 						<h1 className="text-3xl font-bold">Daily Media</h1>
 						<p className="">
 							Explore a world of coding insights and knowledge on
