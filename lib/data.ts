@@ -18,7 +18,7 @@ console.log(\`Serendipity at its finest: \${randomSerendipity}\`);
 
 export const blogs = [
 	{
-		id: "1",
+		id: "d0004b0b-c6de-48b1-bb3b-a545f399921a",
 		title: "Random Blog Adventures",
 		image_url:
 			"https://images.unsplash.com/photo-1700164805522-c3f2f8885144?q=80&w=3732&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",

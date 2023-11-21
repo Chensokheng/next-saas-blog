@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import React, { ReactNode } from "react";
+import NavLinks from "./components/NavLinks";
 
 export const metadata: Metadata = {
 	metadataBase: new URL("https://dailyblog-demo.vercel.app/"),
@@ -28,5 +29,10 @@ export const metadata: Metadata = {
 };
 
 export default function Layout({ children }: { children: ReactNode }) {
-	return <>{children}</>;
+	return (
+		<>
+			<NavLinks />
+			{children}
+		</>
+	);
 }

@@ -1,24 +1,30 @@
-import { blogs } from "@/lib/data";
-import { redirect } from "next/navigation";
+"use client";
 import React from "react";
-import EditForm from "./components/EditForm";
-import { DashboardIcon, Pencil1Icon } from "@radix-ui/react-icons";
-import Link from "next/link";
-import HoverUnderLine from "@/app/(home)/components/HoverUnderLine";
-import BlogNav from "../../components/BlogNav";
 
-export default function Page({ params }: { params: { id: string } }) {
-	const blog = blogs.filter((blog) => blog.id === params.id);
+import { toast } from "@/components/ui/use-toast";
+import { IBlog } from "@/lib/types";
+import BlogForm from "../../components/BlogForm";
+import { blogs } from "@/lib/data";
 
-	if (!blog.length) {
-		return redirect("/404");
-	}
-	const foundBlog = blog[0];
+export default function EditForm({ params }: { params: { id: string } }) {
+	const blog = blogs.filter((blog) => blog.id === params.id)[0];
 
-	return (
-		<div className="space-y-5">
-			<BlogNav path={`/ blog / edit /${params.id}`} />
-			<EditForm blog={foundBlog} />
-		</div>
-	);
+	const onHandleSubmit = (data: {
+		title: string;
+		content: string;
+		image_url: string;
+	}) => {
+		toast({
+			title: "You submitted the following values:",
+			description: (
+				<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+					<code className="text-white">
+						{JSON.stringify(data, null, 2)}
+					</code>
+				</pre>
+			),
+		});
+	};
+
+	return <BlogForm onHandleSubmit={onHandleSubmit} defaultBlog={blog} />;
 }

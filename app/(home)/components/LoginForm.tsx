@@ -4,6 +4,8 @@ import { useUser } from "@/lib/store/user";
 
 import {
 	BackpackIcon,
+	DashIcon,
+	DashboardIcon,
 	GitHubLogoIcon,
 	LockOpen1Icon,
 } from "@radix-ui/react-icons";
@@ -16,6 +18,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import Link from "next/link";
 
 export default function LoginForm() {
 	const supabase = createBrowserClient(
@@ -70,6 +73,17 @@ export default function LoginForm() {
 					>
 						billing <BackpackIcon />
 					</Button>
+					{user.user_metadata?.role === "admin" && (
+						<Link href="/dashboard">
+							<Button
+								variant="ghost"
+								className="w-full flex justify-between items-center"
+							>
+								Dashboard <DashboardIcon />
+							</Button>
+						</Link>
+					)}
+
 					<Button
 						variant="ghost"
 						className="w-full flex justify-between items-center"

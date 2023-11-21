@@ -24,7 +24,7 @@ import {
 	RocketIcon,
 	StarIcon,
 } from "@radix-ui/react-icons";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { IBlog } from "@/lib/types";
 import { Switch } from "@/components/ui/switch";
 import { BsSave } from "react-icons/bs";
@@ -49,11 +49,14 @@ export default function BlogForm({
 }: {
 	defaultBlog: IBlog;
 	onHandleSubmit: (data: {
-		title: string;
 		content: string;
+		title: string;
 		image_url: string;
+		is_premium: boolean;
+		is_published: boolean;
 	}) => void;
 }) {
+	const [isPending, startTransition] = useTransition();
 	const [isPreview, setPreivew] = useState(false);
 
 	const form = useForm<z.infer<typeof FormSchema>>({
@@ -69,7 +72,9 @@ export default function BlogForm({
 	});
 
 	const onSubmit = (data: z.infer<typeof FormSchema>) => {
-		onHandleSubmit(data);
+		startTransition(() => {
+			onHandleSubmit(data);
+		});
 	};
 
 	return (
@@ -283,8 +288,10 @@ export default function BlogForm({
 							<FormControl>
 								<div
 									className={cn(
-										"w-full flex p-2 gap-2 h-70vh",
-										!isPreview ? "divide-x" : "divide-x-0"
+										"w-full flex p-2 gap-2 ",
+										!isPreview
+											? "divide-x h-70vh"
+											: "divide-x-0"
 									)}
 								>
 									<Textarea
