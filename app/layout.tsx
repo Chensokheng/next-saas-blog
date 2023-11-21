@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import Navbar from "./(home)/components/Navbar";
 import { Toaster } from "@/components/ui/toaster";
+import SessisonProvider from "./components/SessisonProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -55,6 +56,7 @@ export default function RootLayout({
 					</main>
 				</ThemeProvider>
 				<Toaster />
+				<SessisonProvider />
 			</body>
 		</html>
 	);

@@ -21,8 +21,10 @@ export async function GET(request: Request) {
 		if (!error) {
 			return NextResponse.redirect(requestUrl.origin);
 		}
+	} else {
+		console.log("no code?");
 	}
 
 	// return the user to an error page with instructions
-	return NextResponse.redirect("/auth/auth-code-error");
+	return NextResponse.redirect(requestUrl.origin + "/auth/error");
 }
