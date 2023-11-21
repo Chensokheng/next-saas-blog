@@ -2,7 +2,7 @@
 
 import { createSupabaseServerClient } from "@/lib/supabase";
 import { IBlog } from "@/lib/types";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, unstable_noStore } from "next/cache";
 import { BlogFormSchemaType } from "../../app/dashboard/blog/schema";
 
 const PATH = "/dashboard/blog";
@@ -52,11 +52,23 @@ export async function readBlog() {
 // }
 
 export async function readBlogById(blogId: string) {
+	// await new Promise((resolve) => setTimeout(resolve, 4000));
+
 	const supabase = await createSupabaseServerClient();
 	return await supabase
 		.from("blog")
 		.select("*,blog_content(*)")
 		.eq("id", blogId)
+		.single();
+}
+
+export async function readBlogContent(blogId: string) {
+	unstable_noStore();
+	const supabase = await createSupabaseServerClient();
+	return await supabase
+		.from("blog_content")
+		.select("content")
+		.eq("blog_id", blogId)
 		.single();
 }
 
@@ -86,6 +98,8 @@ export async function updateBlogDetail(
 			.update({ content: data.content })
 			.eq("blog_id", blogId);
 		revalidatePath(PATH);
+		revalidatePath("/blog/" + blogId);
+
 		return JSON.stringify(result);
 	}
 }

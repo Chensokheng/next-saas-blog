@@ -1,13 +1,20 @@
 import Image from "next/image";
-import React, { FC } from "react";
+import React from "react";
 import MarkdownPreview from "@/app/components/MarkdownPreview";
-import { readBlogById, readBlogIds } from "@/lib/actions";
+import { readBlogById } from "@/lib/actions";
 import { IBlogDetial } from "@/lib/types";
+import Content from "./Content";
 
 export default async function page({ params }: { params: { id: string } }) {
-	const { data: blog } = (await readBlogById(params.id)) as {
-		data: IBlogDetial;
-	};
+	const { data: blog } = await fetch(process.env.SITE_URL + "/api/blog", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({ id: params.id }),
+	})
+		.then((response) => response.json())
+		.then((json) => json);
 
 	return (
 		<div className="max-w-5xl mx-auto min-h-screen  pt-10 space-y-10">
@@ -26,7 +33,7 @@ export default async function page({ params }: { params: { id: string } }) {
 					className=" object-cover object-center rounded-md border-[0.5px] border-zinc-600"
 				/>
 			</div>
-			<MarkdownPreview content={blog?.blog_content?.content || ""} />
+			<Content blogId={params.id} />
 		</div>
 	);
 }

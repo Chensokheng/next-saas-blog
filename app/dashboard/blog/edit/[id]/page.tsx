@@ -6,6 +6,5 @@ import { IBlogDetial } from "@/lib/types";
 
 export default async function Edit({ params }: { params: { id: string } }) {
 	const { data: blog } = await readBlogById(params.id);
-
 	return <EditForm blog={blog as IBlogDetial} />;
 }
