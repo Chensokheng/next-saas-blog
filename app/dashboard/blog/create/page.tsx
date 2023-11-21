@@ -5,7 +5,7 @@ import { toast } from "@/components/ui/use-toast";
 import { defaultCreateBlog } from "@/lib/data";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import BlogForm from "../components/BlogForm";
-import { createBlog } from "../actions";
+import { createBlog } from "../../../../lib/actions";
 import { BlogFormSchemaType } from "../schema";
 import { useRouter } from "next/navigation";
 

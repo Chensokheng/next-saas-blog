@@ -2,10 +2,11 @@ import React from "react";
 import { EyeOpenIcon, Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { updateBlogById, readBlog, deleteBlogById } from "../actions";
+
 import { IBlog } from "@/lib/types";
 import SwitchForm from "./SwitchForm";
 import DeleteAlert from "./DeleteAlert";
+import { readBlog, updateBlogById } from "@/lib/actions";
 
 export default async function BlogTable() {
 	const { data: blogs } = await readBlog();
@@ -69,7 +70,7 @@ const Actions = ({ id }: { id: string }) => {
 	return (
 		<div className="flex items-center gap-2 md:flex-wrap">
 			{/* TODO: change to id */}
-			<Link href="/blog-detail">
+			<Link href={`/blog/${id}`}>
 				<Button className="flex gap-2 items-center" variant="outline">
 					<EyeOpenIcon />
 					View

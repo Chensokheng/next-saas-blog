@@ -3,7 +3,7 @@
 import { createSupabaseServerClient } from "@/lib/supabase";
 import { IBlog } from "@/lib/types";
 import { revalidatePath } from "next/cache";
-import { BlogFormSchemaType } from "../schema";
+import { BlogFormSchemaType } from "../../app/dashboard/blog/schema";
 
 const PATH = "/dashboard/blog";
 
@@ -43,13 +43,13 @@ export async function readBlog() {
 		.order("created_at", { ascending: true });
 }
 
-export async function readBlogHomePage() {
-	const supabase = await createSupabaseServerClient();
-	return supabase
-		.from("blog")
-		.select("*,blog_content(*)")
-		.order("created_at", { ascending: true });
-}
+// export async function readBlogHomePage() {
+// 	const supabase = await createSupabaseServerClient();
+// 	return supabase
+// 		.from("blog")
+// 		.select("*,blog_content(*)")
+// 		.order("created_at", { ascending: true });
+// }
 
 export async function readBlogById(blogId: string) {
 	const supabase = await createSupabaseServerClient();
@@ -95,4 +95,12 @@ export async function deleteBlogById(blogId: string) {
 	const result = await supabase.from("blog").delete().eq("id", blogId);
 	revalidatePath(PATH);
 	return JSON.stringify(result);
+}
+
+export async function readBlogIds() {
+	const supabase = await createSupabaseServerClient();
+	return supabase
+		.from("blog")
+		.select("id")
+		.order("created_at", { ascending: true });
 }

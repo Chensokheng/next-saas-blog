@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
-import { deleteBlogById } from "../actions";
+import { deleteBlogById } from "../../../../lib/actions";
 import { useTransition } from "react";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { toast } from "@/components/ui/use-toast";
