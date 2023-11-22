@@ -14,7 +14,8 @@ export default function Checkout() {
 
 	const user = useUser((state) => state.user);
 
-	const handleCheckOut = () => {
+	const handleCheckOut = (e: any) => {
+		e.preventDefault();
 		startTransition(async () => {
 			const data = JSON.parse(
 				await checkout(user?.email!, location.origin + pathname)
@@ -36,14 +37,17 @@ export default function Checkout() {
 
 	return (
 		<form
-			action={handleCheckOut}
+			onSubmit={handleCheckOut}
 			className={cn(
-				"flex items-center  w-full justify-center h-96 cursor-pointer ",
+				"flex items-center  w-full justify-center h-96 ",
 				{ hidden: !user?.id },
 				{ " animate-pulse": isPending }
 			)}
 		>
-			<button className="ring-1 ring-green-500 p-10 rounded-md text-center">
+			<button
+				className="ring-1 ring-green-500 p-10 rounded-md text-center"
+				type="submit"
+			>
 				<h1 className="uppercase  font-bold text-2xl text-green-500 flex items-center gap-2">
 					<LightningBoltIcon className=" animate-bounce w-5 h-5" />
 					Upgrade to pro

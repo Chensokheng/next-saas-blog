@@ -1,20 +1,25 @@
 import Stripe from "stripe";
 import { headers } from "next/headers";
 import { createSupbaseAdmin } from "@/lib/supabase";
+import { buffer } from "node:stream/consumers";
 
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET!;
 
 const stripe = new Stripe(process.env.STRIPE_SK_KEY!);
 
-export async function POST(request: Request) {
+export async function POST(req: any) {
+	const rawBody = await buffer(req.body);
 	try {
-		const body = await request.text();
 		const sig = headers().get("stripe-signature");
 		let event;
 		try {
-			event = stripe.webhooks.constructEvent(body, sig!, endpointSecret);
-		} catch (err) {
-			return Response.json({ error: `Webhook Error}` });
+			event = stripe.webhooks.constructEvent(
+				rawBody,
+				sig!,
+				endpointSecret
+			);
+		} catch (err: any) {
+			return Response.json({ error: `Webhook Error ${err?.message!} ` });
 		}
 		switch (event.type) {
 			case "customer.subscription.deleted":
