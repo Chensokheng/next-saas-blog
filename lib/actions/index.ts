@@ -43,17 +43,12 @@ export async function readBlog() {
 		.order("created_at", { ascending: true });
 }
 
-// export async function readBlogHomePage() {
-// 	const supabase = await createSupabaseServerClient();
-// 	return supabase
-// 		.from("blog")
-// 		.select("*,blog_content(*)")
-// 		.order("created_at", { ascending: true });
-// }
-
 export async function readBlogById(blogId: string) {
-	// await new Promise((resolve) => setTimeout(resolve, 4000));
+	const supabase = await createSupabaseServerClient();
+	return supabase.from("blog").select("*").eq("id", blogId).single();
+}
 
+export async function readBlogDeatailById(blogId: string) {
 	const supabase = await createSupabaseServerClient();
 	return await supabase
 		.from("blog")
@@ -111,10 +106,10 @@ export async function deleteBlogById(blogId: string) {
 	return JSON.stringify(result);
 }
 
-export async function readBlogIds() {
-	const supabase = await createSupabaseServerClient();
-	return supabase
-		.from("blog")
-		.select("id")
-		.order("created_at", { ascending: true });
-}
+// export async function readBlog() {
+// 	const supabase = await createSupabaseServerClient();
+// 	return supabase
+// 		.from("blog")
+// 		.select("*")
+// 		.order("created_at", { ascending: true });
+// }

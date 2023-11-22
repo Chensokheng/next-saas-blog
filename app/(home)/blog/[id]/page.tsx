@@ -1,20 +1,12 @@
 import Image from "next/image";
 import React from "react";
-import MarkdownPreview from "@/app/components/MarkdownPreview";
-import { readBlogById } from "@/lib/actions";
-import { IBlogDetial } from "@/lib/types";
 import Content from "./Content";
+import { readBlogById } from "@/lib/actions";
+
+// TODO: static generate
 
 export default async function page({ params }: { params: { id: string } }) {
-	const { data: blog } = await fetch(process.env.SITE_URL + "/api/blog", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ id: params.id }),
-	})
-		.then((response) => response.json())
-		.then((json) => json);
+	const { data: blog } = await readBlogById(params.id);
 
 	return (
 		<div className="max-w-5xl mx-auto min-h-screen  pt-10 space-y-10">
@@ -22,7 +14,9 @@ export default async function page({ params }: { params: { id: string } }) {
 				<h1 className=" text-3xl font-bold dark:text-gray-200">
 					{blog?.title}
 				</h1>
-				<p className="text-sm dark:text-gray-400">{blog?.created_at}</p>
+				<p className="text-sm dark:text-gray-400">
+					{new Date(blog?.created_at!).toDateString()}
+				</p>
 			</div>
 
 			<div className="w-full h-96 relative">
