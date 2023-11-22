@@ -1,15 +1,14 @@
 import Image from "next/image";
 import React from "react";
 import Content from "./components/Content";
-import { redirect } from "next/navigation";
-import { fetchCacheSupabase } from "@/lib/supabase";
+
+import { IBlog } from "@/lib/types";
 
 export default async function page({ params }: { params: { id: string } }) {
-	const blogs = await fetchCacheSupabase("blog?select=*&id=eq." + params.id);
-	if (!blogs.length) {
-		return redirect("/");
-	}
-	const blog = blogs[0];
+	const res = await fetch(
+		process.env.SITE_URL + `/api/rest/blog?id=${params.id}`
+	);
+	const { data: blog } = (await res.json()) as { data: IBlog };
 
 	return (
 		<div className="max-w-5xl mx-auto min-h-screen  pt-10 space-y-10">

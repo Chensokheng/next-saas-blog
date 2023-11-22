@@ -2,17 +2,13 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import { readBlog } from "@/lib/actions";
-import { fetchCacheSupabase } from "@/lib/supabase";
-import { IBlog } from "@/lib/types";
 
 export default async function Home() {
-	const result = await fetchCacheSupabase(
-		"blog?select=*&order=created_at.asc"
-	);
+	const { data: blogs } = await readBlog();
 
 	return (
 		<div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 p-5 xl:p-0">
-			{(result as IBlog[])?.map((blog, index) => {
+			{blogs?.map((blog, index) => {
 				return (
 					// TODO: make a component
 					<Link

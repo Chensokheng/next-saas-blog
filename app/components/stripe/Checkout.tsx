@@ -52,7 +52,7 @@ export default function Checkout() {
 					<LightningBoltIcon
 						className={cn(
 							" animate-bounce w-5 h-5",
-							isPending ? "animate-bounce" : "animate-spin"
+							!isPending ? "animate-bounce" : "animate-spin"
 						)}
 					/>
 					Upgrade to pro

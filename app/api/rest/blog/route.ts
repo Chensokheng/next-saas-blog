@@ -1,12 +1,15 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { Database } from "@/lib/types/supabase";
 
-export async function POST(req: Request) {
-	const { id } = await req.json();
+export async function GET(req: Request) {
 	const cookieStore = cookies();
 
-	const supabase = createServerClient(
+	const { searchParams } = new URL(req.url);
+	const id = searchParams.get("id");
+
+	const supabase = createServerClient<Database>(
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,
 		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 		{
@@ -23,8 +26,13 @@ export async function POST(req: Request) {
 			},
 		}
 	);
-	await new Promise((resolve) => setTimeout(resolve, 4000));
+	const blogRef = supabase.from("blog").select("*");
 
-	const data = await supabase.from("blog").select("*").eq("id", id).single();
-	return Response.json({ ...data }, { status: 200 });
+	if (id) {
+		const data = await blogRef.eq("id", id).single();
+		return Response.json({ ...data }, { status: 200 });
+	} else {
+		const data = await blogRef;
+		return Response.json({ ...data }, { status: 200 });
+	}
 }
