@@ -49,7 +49,12 @@ export default function Checkout() {
 				type="submit"
 			>
 				<h1 className="uppercase  font-bold text-2xl text-green-500 flex items-center gap-2">
-					<LightningBoltIcon className=" animate-bounce w-5 h-5" />
+					<LightningBoltIcon
+						className={cn(
+							" animate-bounce w-5 h-5",
+							isPending ? "animate-bounce" : "animate-spin"
+						)}
+					/>
 					Upgrade to pro
 				</h1>
 				<p className="text-sm text-gray-500">
