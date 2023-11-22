@@ -40,6 +40,8 @@ export async function createBlog(data: {
 }
 
 export async function readBlog() {
+	await new Promise((resolve) => setTimeout(resolve, 2000));
+
 	const supabase = await createSupabaseServerClient();
 	return supabase
 		.from("blog")
