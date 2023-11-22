@@ -69,7 +69,9 @@ export interface Database {
           email: string
           id: string
           image_url: string
+          role: string
           stripe_customer_id: string | null
+          stripe_subscriptoin_id: string | null
           subscription_status: boolean
         }
         Insert: {
@@ -78,7 +80,9 @@ export interface Database {
           email: string
           id: string
           image_url: string
+          role?: string
           stripe_customer_id?: string | null
+          stripe_subscriptoin_id?: string | null
           subscription_status?: boolean
         }
         Update: {
@@ -87,7 +91,9 @@ export interface Database {
           email?: string
           id?: string
           image_url?: string
+          role?: string
           stripe_customer_id?: string | null
+          stripe_subscriptoin_id?: string | null
           subscription_status?: boolean
         }
         Relationships: []
@@ -98,6 +104,24 @@ export interface Database {
     }
     Functions: {
       is_admin: {
+        Args: {
+          user_id: string
+        }
+        Returns: boolean
+      }
+      is_premium: {
+        Args: {
+          blog_id: string
+        }
+        Returns: boolean
+      }
+      is_publish: {
+        Args: {
+          blog_id: string
+        }
+        Returns: boolean
+      }
+      is_sub: {
         Args: {
           user_id: string
         }

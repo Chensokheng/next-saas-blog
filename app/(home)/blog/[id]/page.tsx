@@ -1,12 +1,17 @@
 import Image from "next/image";
 import React from "react";
-import Content from "./Content";
+import Content from "./components/Content";
 import { readBlogById } from "@/lib/actions";
+import { redirect } from "next/navigation";
 
 // TODO: static generate
 
 export default async function page({ params }: { params: { id: string } }) {
 	const { data: blog } = await readBlogById(params.id);
+
+	if (!blog) {
+		return redirect("/");
+	}
 
 	return (
 		<div className="max-w-5xl mx-auto min-h-screen  pt-10 space-y-10">

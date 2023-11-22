@@ -1,6 +1,5 @@
 import { users } from "@/lib/data";
 import { cn } from "@/lib/utils";
-import { PersonIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import React from "react";
 
