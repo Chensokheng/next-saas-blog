@@ -51,6 +51,12 @@ export async function readBlogById(blogId: string) {
 	const supabase = await createSupabaseServerClient();
 	return supabase.from("blog").select("*").eq("id", blogId).single();
 }
+export async function readBlogIds() {
+	// await new Promise((resolve) => setTimeout(resolve, 2000));
+
+	const supabase = await createSupabaseServerClient();
+	return supabase.from("blog").select("id");
+}
 
 export async function readBlogDeatailById(blogId: string) {
 	const supabase = await createSupabaseServerClient();

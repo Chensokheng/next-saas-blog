@@ -6,6 +6,14 @@ import BlogHeader from "./components/BlogHeader";
 import { Suspense } from "react";
 import { BlogContentLoading, BlogHeaderLoading } from "./components/Skeleton";
 import { readBlogById } from "@/lib/actions";
+import { createBrowserClient } from "@supabase/ssr";
+
+export async function generateStaticParams() {
+	return [
+		{ id: "e06d5817-ad89-497b-b1da-f561febe6ff7" },
+		{ id: "831e9a24-fa8d-4c63-aab2-8ad33e0c80d2" },
+	];
+}
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
 	const { data: blog } = await readBlogById(params.id);
