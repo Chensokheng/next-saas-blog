@@ -9,10 +9,7 @@ export default function Page() {
 	);
 
 	const readdd = async () => {
-		await supabase
-			.from("blog")
-			.select("*")
-			.order("created_at", { ascending: true });
+		await supabase.from("blog").select("*").eq("id", "2222").single();
 	};
 	useEffect(() => {
 		readdd();
