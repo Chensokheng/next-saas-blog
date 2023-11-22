@@ -1,17 +1,15 @@
 import Image from "next/image";
 import React from "react";
 import Content from "./components/Content";
-import { readBlogById } from "@/lib/actions";
 import { redirect } from "next/navigation";
-
-// TODO: static generate
+import { fetchCacheSupabase } from "@/lib/supabase";
 
 export default async function page({ params }: { params: { id: string } }) {
-	const { data: blog } = await readBlogById(params.id);
-
-	if (!blog) {
+	const blogs = await fetchCacheSupabase("blog?select=*&id=eq." + params.id);
+	if (!blogs.length) {
 		return redirect("/");
 	}
+	const blog = blogs[0];
 
 	return (
 		<div className="max-w-5xl mx-auto min-h-screen  pt-10 space-y-10">

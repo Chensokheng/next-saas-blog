@@ -5,7 +5,8 @@ import { IBlog } from "@/lib/types";
 import { revalidatePath, unstable_noStore } from "next/cache";
 import { BlogFormSchemaType } from "../../app/dashboard/blog/schema";
 
-const PATH = "/dashboard/blog";
+const DASHBOARD = "/dashboard/blog";
+const HOME = "/";
 
 export async function createBlog(data: {
 	content: string;
@@ -30,7 +31,10 @@ export async function createBlog(data: {
 			.from("blog_content")
 			.insert({ blog_id: blogResult?.data?.id!, content: data.content });
 
-		revalidatePath(PATH);
+		revalidatePath(DASHBOARD);
+		if (data.is_published) {
+			revalidatePath(HOME);
+		}
 		return JSON.stringify(result);
 	}
 }
@@ -70,7 +74,8 @@ export async function readBlogContent(blogId: string) {
 export async function updateBlogById(blogId: string, data: IBlog) {
 	const supabase = await createSupabaseServerClient();
 	const result = await supabase.from("blog").update(data).eq("id", blogId);
-	revalidatePath(PATH);
+	revalidatePath(DASHBOARD);
+	revalidatePath(HOME);
 	return JSON.stringify(result);
 }
 
@@ -92,9 +97,9 @@ export async function updateBlogDetail(
 			.from("blog_content")
 			.update({ content: data.content })
 			.eq("blog_id", blogId);
-		revalidatePath(PATH);
+		revalidatePath(DASHBOARD);
 		revalidatePath("/blog/" + blogId);
-
+		revalidatePath(HOME);
 		return JSON.stringify(result);
 	}
 }
@@ -102,14 +107,8 @@ export async function updateBlogDetail(
 export async function deleteBlogById(blogId: string) {
 	const supabase = await createSupabaseServerClient();
 	const result = await supabase.from("blog").delete().eq("id", blogId);
-	revalidatePath(PATH);
+	revalidatePath(DASHBOARD);
+	revalidatePath(HOME);
+	revalidatePath("/blog/" + blogId);
 	return JSON.stringify(result);
 }
-
-// export async function readBlog() {
-// 	const supabase = await createSupabaseServerClient();
-// 	return supabase
-// 		.from("blog")
-// 		.select("*")
-// 		.order("created_at", { ascending: true });
-// }
