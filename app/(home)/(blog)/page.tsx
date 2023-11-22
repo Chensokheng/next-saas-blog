@@ -1,13 +1,13 @@
-import { readBlog } from "@/lib/actions";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
+import { readBlog } from "@/lib/actions";
 
-export default async function BlogList() {
+export default async function Home() {
 	const { data: blogs } = await readBlog();
 
 	return (
-		<>
+		<div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 p-5 xl:p-0">
 			{blogs?.map((blog, index) => {
 				return (
 					<Link
@@ -35,6 +35,6 @@ export default async function BlogList() {
 					</Link>
 				);
 			})}
-		</>
+		</div>
 	);
 }
