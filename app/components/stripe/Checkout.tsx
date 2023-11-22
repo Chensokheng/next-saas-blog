@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { loadStripe } from "@stripe/stripe-js";
 import { checkout } from "@/lib/actions/stripe";
 import { usePathname } from "next/navigation";
+import LoginForm from "../nav/LoginForm";
 export default function Checkout() {
 	const pathname = usePathname();
 
@@ -24,6 +25,14 @@ export default function Checkout() {
 			await result?.redirectToCheckout({ sessionId: data.id });
 		});
 	};
+
+	if (!user) {
+		return (
+			<div className="flex items-center justify-center h-96 gap-2">
+				<LoginForm /> to continue
+			</div>
+		);
+	}
 
 	return (
 		<form
