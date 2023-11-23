@@ -45,6 +45,8 @@ export async function readBlog() {
 }
 
 export async function readBlogAdmin() {
+	// await new Promise((resolve) => setTimeout(resolve, 2000));
+
 	const supabase = await createSupabaseServerClient();
 	return supabase
 		.from("blog")
@@ -53,14 +55,10 @@ export async function readBlogAdmin() {
 }
 
 export async function readBlogById(blogId: string) {
-	// await new Promise((resolve) => setTimeout(resolve, 2000));
-
 	const supabase = await createSupabaseServerClient();
 	return supabase.from("blog").select("*").eq("id", blogId).single();
 }
 export async function readBlogIds() {
-	// await new Promise((resolve) => setTimeout(resolve, 2000));
-
 	const supabase = await createSupabaseServerClient();
 	return supabase.from("blog").select("id");
 }
