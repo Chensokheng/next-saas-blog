@@ -36,13 +36,19 @@ export async function createBlog(data: {
 }
 
 export async function readBlog() {
-	// await new Promise((resolve) => setTimeout(resolve, 2000));
-
 	const supabase = await createSupabaseServerClient();
 	return supabase
 		.from("blog")
 		.select("*")
 		.eq("is_published", true)
+		.order("created_at", { ascending: true });
+}
+
+export async function readBlogAdmin() {
+	const supabase = await createSupabaseServerClient();
+	return supabase
+		.from("blog")
+		.select("*")
 		.order("created_at", { ascending: true });
 }
 
