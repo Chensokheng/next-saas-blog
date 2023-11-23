@@ -1,16 +1,48 @@
+"use client";
 import MarkdownPreview from "@/app/components/markdown/MarkdownPreview";
-import LoginForm from "@/app/components/nav/LoginForm";
+import { Database } from "@/lib/types/supabase";
+import { createBrowserClient } from "@supabase/ssr";
+import React, { useEffect, useState, useTransition } from "react";
+import { BlogContentLoading } from "./Skeleton";
 import Checkout from "@/app/components/stripe/Checkout";
-import { readBlogContent } from "@/lib/actions";
-import { useUser } from "@/lib/store/user";
-import React from "react";
 
-export default async function Content({ blogId }: { blogId: string }) {
-	const { data } = await readBlogContent(blogId);
+export default function Content({ blogId }: { blogId: string }) {
+	const [loading, setLoading] = useState(true);
 
-	if (!data) {
+	const [blog, setBlog] = useState<{
+		blog_id: string;
+		content: string;
+		created_at: string;
+	} | null>();
+
+	const supabase = createBrowserClient<Database>(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
+
+	const readBlogContent = async () => {
+		const { data } = await supabase
+			.from("blog_content")
+			.select("*")
+			.eq("blog_id", blogId)
+			.single();
+		setBlog(data);
+		setLoading(false);
+	};
+
+	useEffect(() => {
+		readBlogContent();
+
+		// eslint-disable-next-line
+	}, []);
+
+	if (loading) {
+		return <BlogContentLoading />;
+	}
+
+	if (!blog?.content) {
 		return <Checkout />;
 	}
 
-	return <MarkdownPreview content={data?.content || ""} />;
+	return <MarkdownPreview content={blog?.content || ""} />;
 }

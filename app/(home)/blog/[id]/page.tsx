@@ -1,10 +1,8 @@
 import React from "react";
-
-import BlogHeader from "./components/BlogHeader";
-import { Suspense } from "react";
-import { BlogHeaderLoading } from "./components/Skeleton";
 import { IBlog } from "@/lib/types";
 import Image from "next/image";
+import Content from "./components/Content";
+import { redirect } from "next/navigation";
 
 export async function generateStaticParams() {
 	const { data: blogs } = await fetch(
@@ -40,6 +38,9 @@ export default async function page({ params }: { params: { id: string } }) {
 	const { data: blog } = (await fetch(
 		process.env.SITE_URL + "/api/blog?id=" + params.id
 	).then((res) => res.json())) as { data: IBlog };
+	if (!blog?.id) {
+		return redirect("/");
+	}
 
 	return (
 		<div className="max-w-5xl mx-auto min-h-screen  pt-10 space-y-10">
@@ -60,8 +61,7 @@ export default async function page({ params }: { params: { id: string } }) {
 					className=" object-cover object-center rounded-md border-[0.5px] border-zinc-600"
 				/>
 			</div>
-			{/* <Suspense fallback={<BlogContentLoading />}> */}
-			{/* <Content blogId={params.id} /> */}
+			<Content blogId={params.id} />
 		</div>
 	);
 }

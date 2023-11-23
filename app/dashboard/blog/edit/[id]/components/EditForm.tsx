@@ -32,7 +32,7 @@ export default function EditForm({ blog }: { blog: IBlogDetial }) {
 			toast({
 				title: "Successfully update 🎉",
 			});
-			router.push("/dashboard/blog");
+			router.push("/dashboard");
 		}
 	};
 
