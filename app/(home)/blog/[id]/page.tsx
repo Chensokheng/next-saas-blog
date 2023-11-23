@@ -4,38 +4,62 @@ import BlogHeader from "./components/BlogHeader";
 import { Suspense } from "react";
 import { BlogHeaderLoading } from "./components/Skeleton";
 import { IBlog } from "@/lib/types";
+import Image from "next/image";
 
 export async function generateStaticParams() {
-	return [{ id: "1" }, { id: "2" }];
+	const { data: blogs } = await fetch(
+		process.env.SITE_URL + "/api/all?query=id"
+	).then((res) => res.json());
+	return blogs;
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
 	await new Promise((resolve) => setTimeout(resolve, 2000));
 
-	const data = await fetch(
-		"https://jsonplaceholder.typicode.com/todos/" + params.id
-	)
-		.then((response) => response.json())
-		.then((json) => json);
+	const { data: blog } = (await fetch(
+		process.env.SITE_URL + "/api/blog?id=" + params.id
+	).then((res) => res.json())) as { data: IBlog };
 
 	return {
-		title: data?.title,
+		title: blog?.title,
 		authors: {
 			name: "chensokheng",
+		},
+		openGraph: {
+			title: blog?.title,
+			url: "https://dailyblog-demo.vercel.app/blog" + params.id,
+			siteName: "Daily Blog",
+			images: blog?.image_url,
+			type: "website",
 		},
 		keywords: ["daily web coding", "chensokheng", "dailywebcoding"],
 	};
 }
 
 export default async function page({ params }: { params: { id: string } }) {
-	const res = await fetch(
-		"https://jsonplaceholder.typicode.com/todos/" + params.id
-	);
-	const data = await res.json();
+	const { data: blog } = (await fetch(
+		process.env.SITE_URL + "/api/blog?id=" + params.id
+	).then((res) => res.json())) as { data: IBlog };
 
 	return (
 		<div className="max-w-5xl mx-auto min-h-screen  pt-10 space-y-10">
-			{JSON.stringify(data, null, 2)}
+			<div className="sm:px-10 space-y-5">
+				<h1 className=" text-3xl font-bold dark:text-gray-200">
+					{blog?.title}
+				</h1>
+				<p className="text-sm dark:text-gray-400">
+					{new Date(blog?.created_at!).toDateString()}
+				</p>
+			</div>
+
+			<div className="w-full h-96 relative">
+				<Image
+					src={blog?.image_url!}
+					alt="cover"
+					fill
+					className=" object-cover object-center rounded-md border-[0.5px] border-zinc-600"
+				/>
+			</div>
 			{/* <Suspense fallback={<BlogContentLoading />}> */}
 			{/* <Content blogId={params.id} /> */}
 		</div>

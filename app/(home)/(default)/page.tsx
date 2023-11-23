@@ -1,14 +1,16 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
-import { blogs } from "@/lib/data";
+import { IBlog } from "@/lib/types";
 
 export default async function Home() {
-	// const { data: blogs } = await readBlog();
+	const { data: blogs } = await fetch(
+		process.env.SITE_URL + "/api/all?query=*"
+	).then((res) => res.json());
 
 	return (
 		<div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 p-5 xl:p-0">
-			{blogs?.map((blog, index) => {
+			{(blogs as IBlog[])?.map((blog, index) => {
 				return (
 					<Link
 						href={"/blog/" + blog.id}
