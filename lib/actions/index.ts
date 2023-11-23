@@ -42,6 +42,7 @@ export async function readBlog() {
 	return supabase
 		.from("blog")
 		.select("*")
+		.eq("is_published", true)
 		.order("created_at", { ascending: true });
 }
 
