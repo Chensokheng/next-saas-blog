@@ -1,6 +1,5 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import path from "path";
 
 export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
@@ -73,14 +72,10 @@ export async function middleware(request: NextRequest) {
 		if (/^\/dashboard(\/.*)?$/.test(pathname)) {
 			return NextResponse.redirect(new URL("/", request.url));
 		}
+		return response;
 	}
-
-	return response;
 }
 
 export const config = {
-	matcher: [
-		// "/((?!api|_next/static|_next/image|favicon.ico).*)",
-		"/dashboard",
-	],
+	matcher: ["/dashboard"],
 };

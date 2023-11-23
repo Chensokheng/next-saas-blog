@@ -5,11 +5,15 @@ import { IBlog } from "@/lib/types";
 import { readBlog } from "@/lib/actions/blog";
 
 export default async function Home() {
-	const { data: blogs } = await readBlog();
+	let { data: blogs } = await readBlog();
+
+	if (!blogs?.length) {
+		blogs = [];
+	}
 
 	return (
 		<div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 p-5 xl:p-0">
-			{blogs?.map((blog, index) => {
+			{blogs.map((blog, index) => {
 				return (
 					<Link
 						href={"/blog/" + blog.id}

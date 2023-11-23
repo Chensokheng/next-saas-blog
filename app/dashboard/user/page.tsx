@@ -1,23 +1,25 @@
+import { readUsers } from "@/lib/actions/user";
 import { users } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
 
-export default function page() {
+export default async function page() {
+	const { data } = await readUsers();
+
 	return (
 		<div className="rounded-md bg-graident-dark border-[0.5px] overflow-y-scroll ">
 			<div className="w-[900px] md:w-full">
-				<div className="grid grid-cols-4 border-b p-5 dark:text-gray-500">
+				<div className="grid grid-cols-3 border-b p-5 dark:text-gray-500">
 					<h1>Name</h1>
 					<h1>Subscription</h1>
-					<h1>email</h1>
-					<h1 className="text-right">{"customer's id"}</h1>
+					<h1>Customer</h1>
 				</div>
 				<div className="space-y-10 p-5">
-					{users.map((user, index) => {
+					{data?.map((user, index) => {
 						return (
 							<div
-								className="grid grid-cols-4 grid-flow-dense"
+								className="grid grid-cols-3 grid-flow-dense"
 								key={index}
 							>
 								<div className="flex items-center gap-2 font-medium">
@@ -35,10 +37,7 @@ export default function page() {
 									status={user.subscription_status}
 								/>
 								<div className="flex items-center">
-									<h1>{user.email}</h1>
-								</div>
-								<div className="flex items-center justify-end">
-									<h1>{user.customer_id}</h1>
+									<h1>{user.stripe_customer_id}</h1>
 								</div>
 							</div>
 						);
@@ -48,21 +47,18 @@ export default function page() {
 		</div>
 	);
 }
-const SubscriptionStatus = ({ status }: { status: string }) => {
+const SubscriptionStatus = ({ status }: { status: boolean }) => {
 	return (
 		<div className="flex items-center">
 			<span
 				className={cn(
 					" dark:bg-zinc-800 px-2 py-1 rounded-full shadow capitalize  border-[.5px] text-sm",
-					{
-						"border-green-500 text-green-600 bg-green-200":
-							status === "Active",
-						"border-zinc-300 dark:text-red-400 dark:border-yellow-700 px-4 bg-red-50":
-							status === "Inactive",
-					}
+					status
+						? "border-green-500 text-green-600 bg-green-200"
+						: "border-zinc-300 dark:text-red-400 dark:border-yellow-700 px-4 bg-red-50"
 				)}
 			>
-				{status}
+				{status ? "Active" : "Inactive"}
 			</span>
 		</div>
 	);
