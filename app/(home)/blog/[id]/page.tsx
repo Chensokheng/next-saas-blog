@@ -2,18 +2,16 @@ import React from "react";
 import { IBlog } from "@/lib/types";
 import Image from "next/image";
 import Content from "./components/Content";
-import { redirect } from "next/navigation";
 
 export async function generateStaticParams() {
 	const { data: blogs } = await fetch(
-		process.env.SITE_URL + "/api/all?query=id"
+		process.env.SITE_URL + "/api/blog?id=*"
 	).then((res) => res.json());
+
 	return blogs;
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-	await new Promise((resolve) => setTimeout(resolve, 2000));
-
 	const { data: blog } = (await fetch(
 		process.env.SITE_URL + "/api/blog?id=" + params.id
 	).then((res) => res.json())) as { data: IBlog };

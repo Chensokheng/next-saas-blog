@@ -6,7 +6,7 @@ import Link from "next/link";
 import { IBlog } from "@/lib/types";
 import SwitchForm from "./SwitchForm";
 import DeleteAlert from "./DeleteAlert";
-import { readBlogAdmin, updateBlogById } from "@/lib/actions";
+import { readBlogAdmin, updateBlogById } from "@/lib/actions/blog";
 
 export default async function BlogTable() {
 	const { data: blogs } = await readBlogAdmin();

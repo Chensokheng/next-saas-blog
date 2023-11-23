@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import MarkdownPreview from "@/app/components/markdown/MarkdownPreview";
+import MarkdownPreview from "@/components/markdown/MarkdownPreview";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import {

@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import { IBlog } from "@/lib/types";
-import { readBlog } from "@/lib/actions";
+import { readBlog } from "@/lib/actions/blog";
 
 export default async function Home() {
 	const { data: blogs } = await readBlog();

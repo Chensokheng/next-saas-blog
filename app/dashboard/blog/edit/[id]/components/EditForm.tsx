@@ -6,7 +6,7 @@ import { toast } from "@/components/ui/use-toast";
 import BlogForm from "../../../components/BlogForm";
 import { IBlogDetial } from "@/lib/types";
 import { BlogFormSchemaType } from "../../../schema";
-import { updateBlogDetail } from "../../../../../../lib/actions";
+import { updateBlogDetail } from "../../../../../../lib/actions/blog";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { redirect, useRouter } from "next/navigation";
 
