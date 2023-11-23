@@ -1,10 +1,10 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
-import { readBlog } from "@/lib/actions";
+import { blogs } from "@/lib/data";
 
 export default async function Home() {
-	const { data: blogs } = await readBlog();
+	// const { data: blogs } = await readBlog();
 
 	return (
 		<div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 p-5 xl:p-0">
