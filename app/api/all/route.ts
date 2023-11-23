@@ -7,6 +7,13 @@ export async function GET(request: Request) {
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,
 		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 	);
-	const result = await supabase.from("blog").select("id");
-	return Response.json({ ...result });
+	const { searchParams } = new URL(request.url);
+	const query = searchParams.get("query");
+
+	if (query) {
+		const result = await supabase.from("blog").select(query!);
+		return Response.json({ ...result });
+	}
+
+	return Response.json({});
 }
