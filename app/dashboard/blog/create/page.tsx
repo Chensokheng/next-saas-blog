@@ -30,7 +30,7 @@ export default function CreateForm() {
 				title: "Successfully create a post 🎉",
 				description: data.title,
 			});
-			router.push("/dashboard/blog");
+			router.push("/dashboard");
 		}
 	};
 

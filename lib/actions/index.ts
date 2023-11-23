@@ -6,7 +6,6 @@ import { revalidatePath, unstable_noStore } from "next/cache";
 import { BlogFormSchemaType } from "../../app/dashboard/blog/schema";
 
 const DASHBOARD = "/dashboard/blog";
-const HOME = "/";
 
 export async function createBlog(data: {
 	content: string;
@@ -32,7 +31,6 @@ export async function createBlog(data: {
 			.insert({ blog_id: blogResult?.data?.id!, content: data.content });
 
 		revalidatePath(DASHBOARD);
-		revalidatePath(HOME);
 		return JSON.stringify(result);
 	}
 }
@@ -83,7 +81,6 @@ export async function updateBlogById(blogId: string, data: IBlog) {
 	const supabase = await createSupabaseServerClient();
 	const result = await supabase.from("blog").update(data).eq("id", blogId);
 	revalidatePath(DASHBOARD);
-	revalidatePath(HOME);
 	revalidatePath("/blog/" + blogId);
 	return JSON.stringify(result);
 }
@@ -107,7 +104,6 @@ export async function updateBlogDetail(
 			.update({ content: data.content })
 			.eq("blog_id", blogId);
 		revalidatePath(DASHBOARD);
-		revalidatePath(HOME);
 		revalidatePath("/blog/" + blogId);
 
 		return JSON.stringify(result);
@@ -118,7 +114,6 @@ export async function deleteBlogById(blogId: string) {
 	const supabase = await createSupabaseServerClient();
 	const result = await supabase.from("blog").delete().eq("id", blogId);
 	revalidatePath(DASHBOARD);
-	revalidatePath(HOME);
 	revalidatePath("/blog/" + blogId);
 	return JSON.stringify(result);
 }
