@@ -63,19 +63,15 @@ export async function middleware(request: NextRequest) {
 	if (data.session) {
 		if (
 			// protect this page only admin can access this /dashboard/members
-			/^\/dashboard(\/.*)?$/.test(pathname) &&
 			data.session.user.user_metadata.role !== "admin"
 		) {
 			return NextResponse.redirect(new URL("/", request.url));
 		}
 	} else {
-		if (/^\/dashboard(\/.*)?$/.test(pathname)) {
-			return NextResponse.redirect(new URL("/", request.url));
-		}
-		return response;
+		return NextResponse.redirect(new URL("/", request.url));
 	}
 }
 
 export const config = {
-	matcher: ["/dashboard"],
+	matcher: ["/dashboard/:path*"],
 };
