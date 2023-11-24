@@ -61,7 +61,7 @@ export default function MarkdownPreview({
 									</div>
 									<CopyButton id={id} />
 								</div>
-								<div className="overflow-y-scroll w-full">
+								<div className="overflow-x-auto w-full">
 									<div className="p-5" id={id}>
 										{children}
 									</div>
