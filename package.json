@@ -19,7 +19,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@stripe/stripe-js": "^2.2.0",
     "@supabase/ssr": "^0.0.10",
-    "@supabase/supabase-js": "^2.38.4",
+    "@supabase/supabase-js": "^2.38.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "next": "14.0.3",

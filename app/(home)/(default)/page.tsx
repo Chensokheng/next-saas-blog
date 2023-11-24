@@ -22,10 +22,12 @@ export default async function Home() {
 					>
 						<div className="w-full h-72 sm:w-full  md:h-64 xl:h-96  relative">
 							<Image
+								priority
 								src={blog.image_url}
 								alt="cover"
 								fill
 								className=" rounded-md object-cover object-center"
+								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 							/>
 						</div>
 						<div className="space-y-2">

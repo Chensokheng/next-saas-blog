@@ -54,10 +54,12 @@ export default async function page({ params }: { params: { id: string } }) {
 
 			<div className="w-full h-96 relative">
 				<Image
+					priority
 					src={blog?.image_url!}
 					alt="cover"
 					fill
 					className=" object-cover object-center rounded-md border-[0.5px] border-zinc-600"
+					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 				/>
 			</div>
 			<Content blogId={params.id} />
