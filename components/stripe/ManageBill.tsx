@@ -16,7 +16,7 @@ export default function ManageBill({ customerId }: { customerId: string }) {
 	};
 
 	return (
-		<form action={onSubmit}>
+		<form onSubmit={onSubmit}>
 			<Button
 				variant="ghost"
 				className="w-full flex justify-between items-center"

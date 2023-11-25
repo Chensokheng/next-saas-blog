@@ -20,7 +20,7 @@ export default function SwitchForm({
 		}
 	};
 	return (
-		<form action={handleonSubmit}>
+		<form onSubmit={handleonSubmit}>
 			<Switch type="submit" checked={checked} className="bg-green-500" />
 		</form>
 	);
