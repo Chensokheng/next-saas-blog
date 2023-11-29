@@ -1,5 +1,5 @@
 "use client";
-import React, { useTransition } from "react";
+import React, { ChangeEvent, useTransition } from "react";
 import { LightningBoltIcon } from "@radix-ui/react-icons";
 import { useUser } from "@/lib/store/user";
 import { cn } from "@/lib/utils";
@@ -14,7 +14,7 @@ export default function Checkout() {
 
 	const user = useUser((state) => state.user);
 
-	const handleCheckOut = (e: any) => {
+	const handleCheckOut = (e: ChangeEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		startTransition(async () => {
 			const data = JSON.parse(

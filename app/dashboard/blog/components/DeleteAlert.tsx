@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { deleteBlogById } from "../../../../lib/actions/blog";
-import { useTransition } from "react";
+import { ChangeEvent, useTransition } from "react";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { toast } from "@/components/ui/use-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -20,7 +20,8 @@ import { cn } from "@/lib/utils";
 export default function DeleteAlert({ id }: { id: string }) {
 	const [isPending, startTransition] = useTransition();
 
-	const onSubmit = () => {
+	const onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		startTransition(async () => {
 			const { error } = JSON.parse(
 				await deleteBlogById(id)
