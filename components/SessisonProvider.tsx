@@ -18,13 +18,13 @@ export default function SessisonProvider() {
 	}, []);
 
 	const readSession = async () => {
-		const { data: userSesssion } = await supabase.auth.getSession();
+		const { data: userSession } = await supabase.auth.getSession();
 
-		if (userSesssion.session) {
+		if (userSession.session) {
 			const { data } = await supabase
 				.from("users")
 				.select("*")
-				.eq("id", userSesssion.session?.user.id)
+				.eq("id", userSession.session?.user.id)
 				.single();
 			setUser(data);
 		}
