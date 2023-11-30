@@ -3,12 +3,10 @@ import React from "react";
 import Image from "next/image";
 import { createBrowserClient } from "@supabase/ssr";
 import { Database } from "@/lib/types/supabase";
+import { createSupabaseServerClient } from "@/lib/supabase";
 
 export default async function Home() {
-	const supabase = createBrowserClient<Database>(
-		process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-	);
+	const supabase = await createSupabaseServerClient();
 	let { data: blogs } = await supabase.from("blog").select("*");
 
 	if (!blogs?.length) {
