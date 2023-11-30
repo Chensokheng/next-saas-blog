@@ -1,10 +1,15 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
-import { readBlog } from "@/lib/actions/blog";
+import { createBrowserClient } from "@supabase/ssr";
+import { Database } from "@/lib/types/supabase";
 
 export default async function Home() {
-	let { data: blogs } = await readBlog();
+	const supabase = createBrowserClient<Database>(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
+	let { data: blogs } = await supabase.from("blog").select("*");
 
 	if (!blogs?.length) {
 		blogs = [];

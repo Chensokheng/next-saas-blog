@@ -1,0 +1,6 @@
+{
+	"editor.inlayHints.padding": true,
+	"codesnap.containerPadding": "3em",
+	"editor.padding.bottom": 0,
+	"editor.padding.top": 0
+}

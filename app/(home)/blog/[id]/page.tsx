@@ -1,20 +1,33 @@
-import React from "react";
-import { IBlog } from "@/lib/types";
+import React, { Suspense } from "react";
 import Image from "next/image";
 import Content from "./components/Content";
+import { Database } from "@/lib/types/supabase";
+import { createBrowserClient } from "@supabase/ssr";
+import { BlogContentLoading } from "./components/Skeleton";
 
 export async function generateStaticParams() {
-	const { data: blogs } = await fetch(
-		process.env.SITE_URL + "/api/blog?id=*"
-	).then((res) => res.json());
+	// This is the new update
+	const supabase = createBrowserClient<Database>(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
+	const { data } = await supabase.from("blog").select("id").limit(10);
 
-	return blogs;
+	return data as any;
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-	const { data: blog } = (await fetch(
-		process.env.SITE_URL + "/api/blog?id=" + params.id
-	).then((res) => res.json())) as { data: IBlog };
+	// This is the new update
+
+	const supabase = createBrowserClient<Database>(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
+	const { data: blog } = await supabase
+		.from("blog")
+		.select("*")
+		.eq("id", params.id)
+		.single();
 
 	return {
 		title: blog?.title,
@@ -33,9 +46,19 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 export default async function page({ params }: { params: { id: string } }) {
-	const { data: blog } = (await fetch(
-		process.env.SITE_URL + "/api/blog?id=" + params.id
-	).then((res) => res.json())) as { data: IBlog };
+	// const { data: blog } = (await fetch(
+	// 	process.env.SITE_URL + "/api/blog?id=" + params.id
+	// ).then((res) => res.json())) as { data: IBlog };
+	// This is the new update
+	const supabase = createBrowserClient<Database>(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	);
+	const { data: blog } = await supabase
+		.from("blog")
+		.select("*")
+		.eq("id", params.id)
+		.single();
 
 	if (!blog?.id) {
 		return <h1 className="text-white">Not found</h1>;
@@ -62,7 +85,9 @@ export default async function page({ params }: { params: { id: string } }) {
 					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 				/>
 			</div>
-			<Content blogId={params.id} />
+			<Suspense fallback={<BlogContentLoading />}>
+				<Content blogId={params.id} />
+			</Suspense>
 		</div>
 	);
 }
