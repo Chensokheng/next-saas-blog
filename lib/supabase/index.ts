@@ -32,13 +32,10 @@ export async function createSupbaseAdmin() {
 	);
 }
 
-export async function fetchCacheSupabase(query: string) {
-	const cookieStore = cookies();
-
-	const authToken = cookieStore.get(
-		"sb-yymdoqdtmbfsrfydgfef-auth-token"
-	)?.value;
-
+// const authToken = cookieStore.get(
+// 	"sb-yymdoqdtmbfsrfydgfef-auth-token"
+// )?.value;
+export async function fetchCacheSupabase(query: string, authToken: string) {
 	let headers = {};
 	if (authToken) {
 		const { access_token } = JSON.parse(authToken);

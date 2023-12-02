@@ -16,6 +16,7 @@ export default function Navbar() {
 					DailyMedia
 				</Link>
 			</HoverUnderLine>
+			<Link href="/test">test</Link>
 			{user ? <Profile /> : <LoginForm />}
 		</nav>
 	);

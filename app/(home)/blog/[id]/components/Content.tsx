@@ -4,14 +4,18 @@ import React from "react";
 
 import Checkout from "@/components/stripe/Checkout";
 import { createSupabaseServerClient } from "@/lib/supabase";
+import { fetchCacheSupabase } from "@/lib/supabase/test";
+import { cookies } from "next/headers";
 
 export default async function Content({ blogId }: { blogId: string }) {
-	const supabase = await createSupabaseServerClient();
-	const { data: blog } = await supabase
-		.from("blog_content")
-		.select("*")
-		.eq("blog_id", blogId)
-		.single();
+	const authToken = cookies().get(
+		"sb-yymdoqdtmbfsrfydgfef-auth-token"
+	)?.value;
+	const blog = await fetchCacheSupabase(
+		"/blog_content?select=*&blog_id=eq." + blogId,
+		authToken!
+	);
+
 	if (!blog?.content) {
 		return <Checkout />;
 	}
